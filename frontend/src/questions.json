@@ -1,0 +1,294 @@
+[
+  {
+    "section": "1. Profil du répondant",
+    "questions": [
+      {
+        "id": "Q1", "label": "Quel est votre âge ?",
+        "type": "radio", "required": true,
+        "options": ["Moins de 18 ans", "18 – 25 ans", "26 – 35 ans", "36 – 50 ans", "Plus de 50 ans"]
+      },
+      {
+        "id": "Q2", "label": "Quel est votre sexe ?",
+        "type": "radio", "required": true,
+        "options": ["Femme", "Homme", "Préfère ne pas répondre"]
+      },
+      {
+        "id": "Q3", "label": "Dans quelle zone vivez-vous ?",
+        "type": "radio", "required": true,
+        "options": ["Urbaine (Dakar, Thiès…)", "Péri-urbaine", "Rurale"],
+        "extra": { "id": "Q3_ville", "label": "Ville / Commune / Village", "type": "text", "required": false }
+      },
+      {
+        "id": "Q4", "label": "Quelle est votre situation professionnelle ?",
+        "type": "radio", "required": true,
+        "options": ["Élève / Étudiant", "Salarié(e)", "Indépendant(e) / Commerçant(e)", "Sans emploi", "Retraité(e)"],
+        "extra": { "id": "Q4_autre", "label": "Autre, précisez", "type": "text", "required": false }
+      },
+      {
+        "id": "Q5", "label": "Quel est votre niveau d'études ?",
+        "type": "radio", "required": true,
+        "options": ["Aucun", "Primaire", "Secondaire", "Supérieur", "Formation coranique / autre"]
+      },
+      {
+        "id": "Q6", "label": "Quelle(s) langue(s) parlez-vous couramment ?",
+        "type": "checkbox", "required": true,
+        "options": ["Wolof", "Français", "Pulaar", "Sérère", "Diola", "Mandingue"],
+        "extra": { "id": "Q6_autre", "label": "Autre langue", "type": "text", "required": false }
+      }
+    ]
+  },
+  {
+    "section": "2. Accès actuel aux soins de santé",
+    "questions": [
+      {
+        "id": "Q7", "label": "À quelle fréquence consultez-vous un médecin ou un professionnel de santé ?",
+        "type": "radio", "required": true,
+        "options": ["Plus d'une fois par mois", "Une fois tous les 2 à 3 mois", "Une à deux fois par an", "Uniquement en cas d'urgence", "Jamais ou presque jamais"]
+      },
+      {
+        "id": "Q8", "label": "Quelle est la distance approximative entre votre domicile et la structure de santé la plus proche ?",
+        "type": "radio", "required": true,
+        "options": ["Moins de 1 km", "1 – 5 km", "5 – 15 km", "Plus de 15 km", "Je ne sais pas"]
+      },
+      {
+        "id": "Q9", "label": "Combien de temps mettez-vous en moyenne à attendre avant d'être reçu(e) par un médecin ?",
+        "type": "radio", "required": true,
+        "options": ["Moins de 30 min", "30 min – 1h", "1h – 3h", "Plus de 3h", "Plus d'une demi-journée"]
+      },
+      {
+        "id": "Q10", "label": "Quels sont les principaux freins qui vous empêchent de consulter un médecin ?",
+        "type": "checkbox", "required": false,
+        "options": ["Coût trop élevé", "Distance / transport", "Temps d'attente trop long", "Manque de médecins disponibles", "Manque de confiance dans le système", "Je préfère l'automédication ou la pharmacopée traditionnelle"],
+        "extra": { "id": "Q10_autre", "label": "Autre", "type": "text", "required": false }
+      },
+      {
+        "id": "Q11", "label": "Combien dépensez-vous en moyenne pour une consultation médicale (hors médicaments) ?",
+        "type": "radio", "required": false,
+        "options": ["Moins de 1 000 FCFA", "1 000 – 3 000 FCFA", "3 000 – 7 000 FCFA", "Plus de 7 000 FCFA", "Je ne consulte pas"]
+      },
+      {
+        "id": "Q12", "label": "Êtes-vous actuellement couvert(e) par une assurance santé ou une mutuelle ?",
+        "type": "radio", "required": true,
+        "options": ["Oui", "Non", "Je ne sais pas"]
+      }
+    ]
+  },
+  {
+    "section": "3. Usage du mobile et du numérique",
+    "questions": [
+      {
+        "id": "Q13", "label": "Quel type de téléphone utilisez-vous ?",
+        "type": "radio", "required": true,
+        "options": ["Smartphone (Android/iPhone)", "Téléphone classique", "Pas de téléphone personnel"]
+      },
+      {
+        "id": "Q14", "label": "Avez-vous accès à internet régulièrement ?",
+        "type": "radio", "required": true,
+        "options": ["Oui, à la maison (Wi-Fi/fibre)", "Oui, via les données mobiles (4G/5G)", "Occasionnellement", "Non, pas d'accès régulier"]
+      },
+      {
+        "id": "Q15", "label": "Utilisez-vous déjà des services de paiement mobile ?",
+        "type": "checkbox", "required": false,
+        "options": ["Wave", "Orange Money", "Free Money", "Wizall", "Aucun"]
+      },
+      {
+        "id": "Q16", "label": "À quelle fréquence utilisez-vous des applications mobiles (WhatsApp, réseaux sociaux, banque…) ?",
+        "type": "radio", "required": true,
+        "options": ["Tous les jours", "Plusieurs fois par semaine", "Rarement", "Jamais"]
+      },
+      {
+        "id": "Q17", "label": "Avez-vous déjà utilisé une application liée à la santé ?",
+        "type": "radio", "required": true,
+        "options": ["Oui, régulièrement", "Oui, occasionnellement", "Non, jamais"],
+        "extra": { "id": "Q17_detail", "label": "Si oui, laquelle ou lesquelles ?", "type": "text", "required": false }
+      }
+    ]
+  },
+  {
+    "section": "4. Intérêt pour la téléconsultation",
+    "sectionNote": "La téléconsultation permet de consulter un médecin à distance, par vidéo, audio ou messagerie écrite, depuis votre téléphone.",
+    "questions": [
+      {
+        "id": "Q18", "label": "Seriez-vous prêt(e) à consulter un médecin à distance via une application ?",
+        "type": "radio", "required": true,
+        "options": ["Oui, sans hésitation", "Oui, mais uniquement pour certains cas", "Peut-être, je suis curieux(se) mais hésitant(e)", "Non, je préfère le contact physique avec le médecin"]
+      },
+      {
+        "id": "Q19", "label": "Pour quels types de motifs accepteriez-vous une téléconsultation ?",
+        "type": "checkbox", "required": false,
+        "options": ["Conseil médical général / petite question", "Renouvellement d'ordonnance", "Suivi d'une maladie chronique (diabète, hypertension…)", "Symptômes légers (rhume, mal de tête, allergie…)", "Santé mentale / soutien psychologique", "Santé sexuelle / reproductive", "Pédiatrie (enfants)", "Aucun, je préférerais toujours me déplacer"]
+      },
+      {
+        "id": "Q20", "label": "Quel mode de téléconsultation préféreriez-vous ?",
+        "type": "radio", "required": false,
+        "options": ["Vidéo", "Audio (appel vocal)", "Chat / messagerie écrite", "Cela m'est égal"]
+      },
+      {
+        "id": "Q21", "label": "Quel prix vous semblerait acceptable pour une téléconsultation ?",
+        "type": "radio", "required": false,
+        "options": ["Moins de 1 000 FCFA", "1 000 – 2 000 FCFA", "2 000 – 3 500 FCFA", "3 500 – 5 000 FCFA", "Plus de 5 000 FCFA"]
+      },
+      {
+        "id": "Q22", "label": "Quelle confiance accorderiez-vous à un diagnostic posé à distance ? (1 = pas du tout, 5 = totalement)",
+        "type": "scale", "required": true,
+        "min": 1, "max": 5
+      }
+    ]
+  },
+  {
+    "section": "5. Dossier médical numérique",
+    "sectionNote": "Un dossier médical numérique regroupe vos consultations, ordonnances et résultats d'examens, accessibles depuis votre téléphone.",
+    "questions": [
+      {
+        "id": "Q23", "label": "Comment conservez-vous actuellement vos documents médicaux ?",
+        "type": "radio", "required": true,
+        "options": ["Dans un dossier papier à la maison", "Photos sur mon téléphone", "Je ne les conserve pas vraiment", "Je les perds souvent"],
+        "extra": { "id": "Q23_autre", "label": "Autre", "type": "text", "required": false }
+      },
+      {
+        "id": "Q24", "label": "Souhaiteriez-vous avoir un dossier médical numérique sécurisé, accessible depuis votre téléphone ?",
+        "type": "radio", "required": true,
+        "options": ["Oui, c'est très utile", "Oui, mais sous conditions (sécurité, contrôle…)", "Indifférent", "Non"]
+      },
+      {
+        "id": "Q25", "label": "Seriez-vous d'accord pour que votre médecin partage votre dossier avec un autre professionnel de santé en cas de besoin ?",
+        "type": "radio", "required": true,
+        "options": ["Oui, toujours", "Oui, avec mon autorisation à chaque fois", "Non"]
+      }
+    ]
+  },
+  {
+    "section": "6. Paiement mobile pour les soins",
+    "questions": [
+      {
+        "id": "Q26", "label": "Seriez-vous à l'aise avec l'idée de payer une consultation médicale via Wave ou Orange Money ?",
+        "type": "radio", "required": true,
+        "options": ["Très à l'aise", "Plutôt à l'aise", "Plutôt réticent(e)", "Pas du tout à l'aise"]
+      },
+      {
+        "id": "Q27", "label": "Quel mode de paiement préféreriez-vous pour vos soins via une application ?",
+        "type": "radio", "required": false,
+        "options": ["Paiement à l'acte (à chaque consultation)", "Forfait mensuel (abonnement avec consultations illimitées)", "Paiement par un tiers (employeur, famille, mutuelle)", "Cela m'est égal"]
+      },
+      {
+        "id": "Q28", "label": "Aimeriez-vous pouvoir payer vos médicaments en pharmacie partenaire directement depuis l'application ?",
+        "type": "radio", "required": false,
+        "options": ["Oui, très utile", "Peut-être", "Non"]
+      }
+    ]
+  },
+  {
+    "section": "7. Module Don de Sang — FAGARUU Blood",
+    "sectionNote": "FAGARUU prévoit un module qui met en relation rapidement les donneurs de sang volontaires avec les patients ou hôpitaux qui ont un besoin urgent.",
+    "questions": [
+      {
+        "id": "Q29", "label": "Connaissez-vous votre groupe sanguin ?",
+        "type": "radio", "required": false,
+        "options": ["Oui", "Non"],
+        "extra": { "id": "Q29_groupe", "label": "Si oui, lequel", "type": "text", "required": false }
+      },
+      {
+        "id": "Q30", "label": "Avez-vous déjà donné votre sang ?",
+        "type": "radio", "required": false,
+        "options": ["Oui, plusieurs fois", "Oui, une fois", "Non, jamais, mais cela m'intéresse", "Non, et cela ne m'intéresse pas"]
+      },
+      {
+        "id": "Q31", "label": "Si vous ne donnez pas votre sang, pour quelles raisons ?",
+        "type": "checkbox", "required": false,
+        "options": ["Je ne sais pas où aller / comment faire", "Je manque de temps", "J'ai peur des aiguilles ou des effets secondaires", "Raisons médicales (poids, anémie, traitement…)", "Raisons religieuses ou culturelles", "Manque d'information sur l'utilité du don"],
+        "extra": { "id": "Q31_autre", "label": "Autre", "type": "text", "required": false }
+      },
+      {
+        "id": "Q32", "label": "Vous ou un proche avez-vous déjà fait face à une urgence de besoin de sang ?",
+        "type": "radio", "required": false,
+        "options": ["Oui", "Non"],
+        "extra": { "id": "Q32_detail", "label": "Si oui, comment l'urgence a-t-elle été gérée ?", "type": "text", "required": false }
+      },
+      {
+        "id": "Q33", "label": "Accepteriez-vous de recevoir des notifications pour des demandes de sang urgentes près de chez vous ?",
+        "type": "radio", "required": false,
+        "options": ["Oui, à tout moment", "Oui, mais uniquement aux heures ouvrables", "Oui, mais uniquement pour les urgences vitales", "Non"]
+      },
+      {
+        "id": "Q34", "label": "Que pensez-vous d'un système qui anonymise vos coordonnées et vous met en relation uniquement après votre accord ?",
+        "type": "radio", "required": false,
+        "options": ["Excellente idée", "Bonne idée", "Sans avis", "Je ne suis pas convaincu(e)"]
+      }
+    ]
+  },
+  {
+    "section": "8. Assistant intelligent multilingue",
+    "sectionNote": "FAGARUU prévoit un assistant automatique qui répond à vos questions de santé en Wolof ou en Français.",
+    "questions": [
+      {
+        "id": "Q35", "label": "Dans quelle langue préféreriez-vous interagir avec l'application ?",
+        "type": "radio", "required": true,
+        "options": ["Wolof", "Français", "Les deux indifféremment"],
+        "extra": { "id": "Q35_autre", "label": "Autre langue souhaitée", "type": "text", "required": false }
+      },
+      {
+        "id": "Q36", "label": "Seriez-vous à l'aise avec l'idée de poser vos questions de santé à un assistant automatique avant de consulter un médecin ?",
+        "type": "radio", "required": false,
+        "options": ["Oui", "Peut-être", "Non, je préfère parler directement à un médecin"]
+      },
+      {
+        "id": "Q37", "label": "Pour quels usages utiliseriez-vous principalement cet assistant ?",
+        "type": "checkbox", "required": false,
+        "options": ["Comprendre des symptômes", "Vérifier l'effet d'un médicament", "Recevoir des conseils de prévention", "Être orienté(e) vers le bon spécialiste", "Aucun, je n'utiliserais pas un tel outil"]
+      }
+    ]
+  },
+  {
+    "section": "9. Confiance, sécurité et préoccupations",
+    "questions": [
+      {
+        "id": "Q38", "label": "Quelles sont vos principales préoccupations concernant une plateforme de santé digitale ?",
+        "type": "checkbox", "required": false,
+        "options": ["Confidentialité de mes données médicales", "Qualité du diagnostic à distance", "Compétence des médecins disponibles", "Coût du service", "Difficulté d'utilisation de l'application", "Connexion internet insuffisante", "Risque de fraude ou d'arnaque", "Aucune préoccupation particulière"]
+      },
+      {
+        "id": "Q39", "label": "Quelle est votre confiance dans la sécurité des applications mobiles pour vos données médicales ? (1 = très faible, 5 = très élevée)",
+        "type": "scale", "required": true,
+        "min": 1, "max": 5
+      },
+      {
+        "id": "Q40", "label": "Qui doit, selon vous, garantir la sécurité de vos données de santé ?",
+        "type": "checkbox", "required": false,
+        "options": ["L'État sénégalais et la CDP", "L'éditeur de l'application (FAGARUU)", "Les médecins eux-mêmes", "Une autorité indépendante", "Je ne sais pas"]
+      }
+    ]
+  },
+  {
+    "section": "10. Vos suggestions et besoins spécifiques",
+    "questions": [
+      {
+        "id": "Q41", "label": "Selon vous, quelle fonctionnalité serait la plus utile dans une application de santé au Sénégal ?",
+        "type": "textarea", "required": false
+      },
+      {
+        "id": "Q42", "label": "Quelle serait, selon vous, la meilleure manière de faire connaître FAGARUU et de gagner votre confiance ?",
+        "type": "textarea", "required": false
+      },
+      {
+        "id": "Q43", "label": "Avez-vous des suggestions, des inquiétudes ou des idées particulières à nous partager ?",
+        "type": "textarea", "required": false
+      }
+    ]
+  },
+  {
+    "section": "11. Engagement de votre côté",
+    "questions": [
+      {
+        "id": "Q44", "label": "Accepteriez-vous d'être recontacté(e) pour participer à la phase pilote de FAGARUU à Dakar ?",
+        "type": "radio", "required": true,
+        "options": ["Oui", "Non"],
+        "conditionals": [
+          { "condition": "Oui", "fields": [
+            { "id": "Q44_prenom", "label": "Prénom", "type": "text", "required": false },
+            { "id": "Q44_telephone", "label": "Numéro de téléphone (facultatif)", "type": "text", "required": false }
+          ]}
+        ]
+      }
+    ]
+  }
+]
