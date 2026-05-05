@@ -1,0 +1,402 @@
+[
+  {
+    "section": "1. Toi en quelques mots",
+    "questions": [
+      {
+        "id": "Q1", "label": "Quel âge as-tu ?",
+        "type": "radio", "required": true,
+        "options": ["13 – 15 ans", "16 – 17 ans", "18 – 21 ans", "22 – 24 ans"]
+      },
+      {
+        "id": "Q2", "label": "Tu es...",
+        "type": "radio", "required": true,
+        "options": ["Une fille", "Un garçon", "Préfère ne pas répondre"]
+      },
+      {
+        "id": "Q3", "label": "Où vis-tu ?",
+        "type": "radio", "required": true,
+        "options": ["Zone urbaine (Dakar, Thiès, etc.)", "Zone péri-urbaine", "Zone rurale / village"],
+        "extra": { "id": "Q3_ville", "label": "Ville / Commune / Village", "type": "text", "required": false }
+      },
+      {
+        "id": "Q4", "label": "Quelle est ta situation actuelle ?",
+        "type": "radio", "required": true,
+        "options": [
+          "Élève au collège / lycée",
+          "Étudiant(e) à l'université ou en formation",
+          "En apprentissage / formation professionnelle",
+          "École coranique / daara",
+          "Sans école et sans emploi",
+          "En activité professionnelle"
+        ]
+      },
+      {
+        "id": "Q5", "label": "Avec qui vis-tu principalement ?",
+        "type": "radio", "required": true,
+        "options": [
+          "Mes parents (les deux)",
+          "Un seul de mes parents",
+          "Famille élargie (oncle, tante, grands-parents)",
+          "En internat / pension",
+          "Seul(e) ou en colocation"
+        ],
+        "extra": { "id": "Q5_autre", "label": "Autre", "type": "text", "required": false }
+      },
+      {
+        "id": "Q6", "label": "Quelle(s) langue(s) parles-tu couramment ?",
+        "type": "checkbox", "required": true,
+        "options": ["Wolof", "Français", "Pulaar", "Sérère", "Diola", "Mandingue"]
+      }
+    ]
+  },
+  {
+    "section": "2. Ce que tu sais déjà sur la santé reproductive",
+    "sectionNote": "La santé reproductive concerne le corps qui change, l'hygiène, les relations, la prévention des grossesses, les infections, et plus largement le bien-être.",
+    "questions": [
+      {
+        "id": "Q7", "label": "As-tu déjà reçu une éducation ou des cours sur la santé reproductive ?",
+        "type": "checkbox", "required": true,
+        "options": [
+          "Oui, à l'école",
+          "Oui, par mes parents ou ma famille",
+          "Oui, dans une association ou un centre de jeunes",
+          "Oui, à la mosquée / l'église",
+          "Non, jamais de manière formelle"
+        ]
+      },
+      {
+        "id": "Q8", "label": "À quel âge as-tu reçu pour la première fois ce type d'information ?",
+        "type": "radio", "required": true,
+        "options": ["Avant 12 ans", "12 – 14 ans", "15 – 17 ans", "Après 18 ans", "Jamais"]
+      },
+      {
+        "id": "Q9", "label": "Comment évalues-tu ton niveau de connaissance général sur le sujet ? (1 = Très faible, 5 = Très bon)",
+        "type": "scale", "required": true,
+        "min": 1, "max": 5
+      },
+      {
+        "id": "Q10", "label": "Sur quels sujets aimerais-tu avoir plus d'informations claires et fiables ?",
+        "type": "checkbox", "required": false,
+        "options": [
+          "Les changements du corps (puberté)",
+          "Le cycle menstruel et l'hygiène intime",
+          "Les relations amoureuses et le consentement",
+          "La prévention des grossesses non désirées",
+          "Les infections sexuellement transmissibles (IST, VIH)",
+          "La santé mentale et l'estime de soi",
+          "Les violences (verbales, physiques, en ligne)",
+          "Le mariage précoce / forcé",
+          "La pression des amis et des réseaux sociaux",
+          "Comment parler à mes parents de ces sujets"
+        ],
+        "extra": { "id": "Q10_autre", "label": "Autre", "type": "text", "required": false }
+      }
+    ]
+  },
+  {
+    "section": "3. Où vas-tu chercher tes informations aujourd'hui ?",
+    "questions": [
+      {
+        "id": "Q11", "label": "Quand tu as une question sur ton corps ou sur la santé reproductive, à qui ou à quoi t'adresses-tu en premier ?",
+        "type": "checkbox", "required": false,
+        "options": [
+          "À mes amis / camarades de classe",
+          "À mes frères / sœurs aînés",
+          "À ma mère",
+          "À mon père",
+          "À un autre membre de ma famille (tante, cousine…)",
+          "À un professeur ou enseignant",
+          "À un imam, prêtre ou leader religieux",
+          "À un médecin, infirmier(ère) ou sage-femme",
+          "Sur Google / un moteur de recherche",
+          "Sur YouTube",
+          "Sur TikTok / Instagram / Snapchat",
+          "Sur WhatsApp (groupes, contacts)",
+          "Dans des livres / magazines",
+          "À la télévision ou à la radio",
+          "Personne, je garde mes questions pour moi"
+        ]
+      },
+      {
+        "id": "Q12", "label": "Parmi ces sources, laquelle te semble la plus FIABLE ?",
+        "type": "textarea", "required": false
+      },
+      {
+        "id": "Q13", "label": "Et laquelle utilises-tu LE PLUS SOUVENT en réalité ?",
+        "type": "textarea", "required": false
+      },
+      {
+        "id": "Q14", "label": "Si tu utilises internet ou les réseaux sociaux pour ces sujets, quels contenus consultes-tu ?",
+        "type": "checkbox", "required": false,
+        "options": [
+          "Vidéos courtes (TikTok, Reels, Shorts)",
+          "Vidéos longues (YouTube, podcasts)",
+          "Articles ou blogs",
+          "Forums et groupes de discussion",
+          "Comptes de médecins ou sages-femmes",
+          "Comptes d'influenceurs",
+          "Je n'utilise pas internet pour ces sujets"
+        ]
+      },
+      {
+        "id": "Q15", "label": "As-tu déjà reçu une information sur ces sujets dont tu t'es rendu(e) compte qu'elle était FAUSSE ?",
+        "type": "radio", "required": false,
+        "options": ["Oui, plusieurs fois", "Oui, une fois", "Non, jamais", "Je ne sais pas"],
+        "extra": { "id": "Q15_detail", "label": "Si oui, sur quel sujet", "type": "text", "required": false }
+      }
+    ]
+  },
+  {
+    "section": "4. Ce qui est difficile à aborder",
+    "questions": [
+      {
+        "id": "Q16", "label": "Pour toi, parler de santé reproductive avec un adulte, c'est :",
+        "type": "radio", "required": true,
+        "options": ["Très facile", "Plutôt facile", "Plutôt difficile", "Très difficile", "Impossible"]
+      },
+      {
+        "id": "Q17", "label": "Quels sont les principaux freins qui t'empêchent de poser tes questions librement ?",
+        "type": "checkbox", "required": false,
+        "options": [
+          "La honte / pudeur",
+          "La peur d'être jugé(e)",
+          "La peur que mes parents l'apprennent",
+          "La peur d'être puni(e)",
+          "Mes croyances religieuses ou culturelles",
+          "Je ne sais pas à qui demander",
+          "Je n'ai pas confiance dans les adultes autour de moi",
+          "Le manque de confidentialité chez le médecin",
+          "Le coût d'une consultation",
+          "La distance pour aller dans un centre adapté",
+          "Aucun frein particulier"
+        ]
+      },
+      {
+        "id": "Q18", "label": "Y a-t-il des sujets dont tu aimerais parler mais que personne autour de toi n'aborde jamais ?",
+        "type": "radio", "required": false,
+        "options": ["Oui", "Non", "Je préfère ne pas répondre"],
+        "extra": { "id": "Q18_detail", "label": "Si oui, lequel ou lesquels", "type": "text", "required": false }
+      },
+      {
+        "id": "Q19", "label": "Connais-tu, dans ta zone, un endroit (centre de santé, ONG, association) où un jeune peut venir poser ses questions sans être jugé ?",
+        "type": "radio", "required": false,
+        "options": ["Oui", "Non", "J'en ai entendu parler mais je n'y suis jamais allé(e)"],
+        "extra": { "id": "Q19_detail", "label": "Si oui, lequel", "type": "text", "required": false }
+      }
+    ]
+  },
+  {
+    "section": "5. Ce que tu attendrais d'une plateforme comme FAGARU",
+    "questions": [
+      {
+        "id": "Q20", "label": "Si une application ou un site existait pour répondre à tes questions de santé reproductive de manière fiable et anonyme, l'utiliserais-tu ?",
+        "type": "radio", "required": true,
+        "options": [
+          "Oui, dès aujourd'hui",
+          "Oui, mais seulement si c'est vraiment anonyme",
+          "Peut-être, j'irais voir",
+          "Non, je n'en ai pas besoin",
+          "Non, je préfère parler à une vraie personne"
+        ]
+      },
+      {
+        "id": "Q21", "label": "Sous quelle forme préfèrerais-tu accéder à l'information ?",
+        "type": "checkbox", "required": false,
+        "options": [
+          "Vidéos courtes (style TikTok)",
+          "Articles courts à lire",
+          "Bandes dessinées / illustrations",
+          "Podcasts audio",
+          "Quiz et jeux interactifs",
+          "Témoignages d'autres jeunes",
+          "Chat en direct avec un professionnel",
+          "Foire aux questions (FAQ)",
+          "Lignes d'écoute / numéro à appeler"
+        ]
+      },
+      {
+        "id": "Q22", "label": "Dans quelle langue préférerais-tu utiliser la plateforme ?",
+        "type": "radio", "required": true,
+        "options": ["Wolof", "Français", "Les deux indifféremment"],
+        "extra": { "id": "Q22_autre", "label": "Autre langue souhaitée", "type": "text", "required": false }
+      },
+      {
+        "id": "Q23", "label": "Quel canal d'accès te semble le plus pratique ?",
+        "type": "radio", "required": true,
+        "options": [
+          "Application mobile à télécharger",
+          "Site web simple à consulter",
+          "Compte WhatsApp avec réponses automatiques",
+          "Chatbot sur Messenger / Instagram",
+          "Numéro de téléphone à appeler / SMS"
+        ]
+      },
+      {
+        "id": "Q24", "label": "À quelle fréquence penses-tu que tu utiliserais cette plateforme ?",
+        "type": "radio", "required": true,
+        "options": [
+          "Tous les jours",
+          "Plusieurs fois par semaine",
+          "De temps en temps",
+          "Seulement quand j'ai un besoin précis",
+          "Jamais"
+        ]
+      }
+    ]
+  },
+  {
+    "section": "6. Module « Pose ta question » anonyme",
+    "sectionNote": "FAGARU prévoit un espace où tu peux poser n'importe quelle question à un professionnel de santé, totalement anonymement.",
+    "questions": [
+      {
+        "id": "Q25", "label": "Cette idée te semble-t-elle utile ?",
+        "type": "radio", "required": true,
+        "options": ["Très utile", "Plutôt utile", "Sans avis", "Pas vraiment utile"]
+      },
+      {
+        "id": "Q26", "label": "À qui ferais-tu le plus confiance pour répondre à tes questions ?",
+        "type": "radio", "required": false,
+        "options": [
+          "Un médecin",
+          "Une sage-femme",
+          "Un(e) psychologue",
+          "Un(e) jeune un peu plus âgé(e) formé(e) (pair-éducateur)",
+          "Un éducateur ou un coach",
+          "Une intelligence artificielle si elle est fiable"
+        ]
+      },
+      {
+        "id": "Q27", "label": "En combien de temps souhaiterais-tu recevoir une réponse à ta question ?",
+        "type": "radio", "required": false,
+        "options": [
+          "Immédiatement",
+          "En quelques heures",
+          "Dans la journée",
+          "Dans les 24-48h",
+          "Peu importe"
+        ]
+      },
+      {
+        "id": "Q28", "label": "Serais-tu prêt(e) à poser une question si tu devais...",
+        "type": "checkbox", "required": false,
+        "options": [
+          "...donner ton vrai prénom",
+          "...donner ton numéro de téléphone",
+          "...donner ton âge et ton sexe seulement",
+          "...rester totalement anonyme (pseudonyme)"
+        ]
+      }
+    ]
+  },
+  {
+    "section": "7. Confiance et confidentialité",
+    "questions": [
+      {
+        "id": "Q29", "label": "Quelles sont tes principales inquiétudes concernant une plateforme sur ce sujet ?",
+        "type": "checkbox", "required": false,
+        "options": [
+          "Que mes parents découvrent que je l'utilise",
+          "Que mes amis découvrent que je l'utilise",
+          "Que mes données soient revendues",
+          "Que les informations ne soient pas fiables",
+          "Que ce soit contre ma religion / ma culture",
+          "Que ce soit trop compliqué à utiliser",
+          "Que cela coûte de l'argent",
+          "Aucune inquiétude particulière"
+        ]
+      },
+      {
+        "id": "Q30", "label": "Quelle confiance accorderais-tu à une plateforme officielle, soutenue par des médecins sénégalais et le Ministère de la Santé ? (1 = Aucune, 5 = Totale)",
+        "type": "scale", "required": true,
+        "min": 1, "max": 5
+      },
+      {
+        "id": "Q31", "label": "Une plateforme dédiée aux jeunes devrait, selon toi, être promue par :",
+        "type": "checkbox", "required": false,
+        "options": [
+          "Le Ministère de la Santé",
+          "Le Ministère de l'Éducation",
+          "Des ONG (Marie Stopes, ANJSF, etc.)",
+          "Des influenceurs sénégalais connus",
+          "Des médecins et sages-femmes locaux",
+          "Des associations de jeunes",
+          "Des leaders religieux ouverts au dialogue"
+        ]
+      }
+    ]
+  },
+  {
+    "section": "8. Ton accès au numérique",
+    "questions": [
+      {
+        "id": "Q32", "label": "Quel téléphone utilises-tu ?",
+        "type": "radio", "required": true,
+        "options": [
+          "Un smartphone qui m'appartient",
+          "Un smartphone que je partage (parent, frère/sœur)",
+          "Un téléphone classique (pas de smartphone)",
+          "Pas de téléphone personnel"
+        ]
+      },
+      {
+        "id": "Q33", "label": "Comment te connectes-tu à internet le plus souvent ?",
+        "type": "radio", "required": true,
+        "options": [
+          "Données mobiles (4G)",
+          "Wi-Fi à la maison",
+          "Wi-Fi à l'école / au travail",
+          "Cybercafé",
+          "Je ne me connecte pas"
+        ]
+      },
+      {
+        "id": "Q34", "label": "Combien de temps passes-tu en moyenne par jour sur ton téléphone ou sur internet ?",
+        "type": "radio", "required": true,
+        "options": ["Moins d'1h", "1 – 3h", "3 – 5h", "Plus de 5h", "Très peu / jamais"]
+      },
+      {
+        "id": "Q35", "label": "Sur quels réseaux sociaux es-tu présent(e) ?",
+        "type": "checkbox", "required": false,
+        "options": ["TikTok", "Instagram", "Snapchat", "Facebook", "WhatsApp", "YouTube"],
+        "extra": { "id": "Q35_autre", "label": "Autre", "type": "text", "required": false }
+      }
+    ]
+  },
+  {
+    "section": "9. Tes idées et tes mots",
+    "questions": [
+      {
+        "id": "Q36", "label": "Si tu pouvais poser UNE question à un médecin, en sachant que personne ne saura jamais que c'est toi, quelle serait-elle ?",
+        "type": "textarea", "required": false
+      },
+      {
+        "id": "Q37", "label": "Selon toi, qu'est-ce qui ferait qu'une plateforme comme FAGARU serait vraiment utilisée par les jeunes de ton entourage ?",
+        "type": "textarea", "required": false
+      },
+      {
+        "id": "Q38", "label": "Au contraire, qu'est-ce qui pourrait empêcher les jeunes de l'utiliser ?",
+        "type": "textarea", "required": false
+      },
+      {
+        "id": "Q39", "label": "As-tu un message, une suggestion ou une idée à partager avec l'équipe FAGARU ?",
+        "type": "textarea", "required": false
+      }
+    ]
+  },
+  {
+    "section": "10. Et après ?",
+    "questions": [
+      {
+        "id": "Q40", "label": "Aimerais-tu participer aux tests de la plateforme FAGARU et donner ton avis pendant le développement ?",
+        "type": "radio", "required": true,
+        "options": ["Oui", "Non", "Peut-être"],
+        "conditionals": [
+          { "condition": "Oui", "fields": [
+            { "id": "Q40_prenom", "label": "Prénom (ou pseudonyme)", "type": "text", "required": false },
+            { "id": "Q40_contact", "label": "Numéro WhatsApp ou e-mail (au choix, facultatif)", "type": "text", "required": false }
+          ]}
+        ]
+      }
+    ]
+  }
+]
