@@ -10,7 +10,7 @@ export function useStats() {
   const fetchStats = useCallback(() => {
     setLoading(true);
     setError(null);
-    fetch(`${API}/api/stats`)
+    fetch(`${API}/api/responses/stats`)
       .then(r => { if (!r.ok) throw new Error(`HTTP ${r.status}`); return r.json(); })
       .then(d => { setStats(d); setLoading(false); })
       .catch(e => { setError(e.message); setLoading(false); });

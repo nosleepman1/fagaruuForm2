@@ -9,8 +9,11 @@ export default function Stats() {
   const [activeTab, setActiveTab] = useState("overview");
 
   useEffect(() => {
-    fetch(`${API}/api/stats`)
-      .then(r => r.json())
+    fetch(`${API}/api/responses/stats`)
+      .then(r => {
+        if (!r.ok) throw new Error(`HTTP ${r.status}`);
+        return r.json();
+      })
       .then(d => { setStats(d); setLoading(false); })
       .catch(() => { setError("Impossible de charger les statistiques."); setLoading(false); });
   }, []);
@@ -22,21 +25,23 @@ export default function Stats() {
   const tabs = [
     { id: "overview", label: "Vue d'ensemble" },
     { id: "profil", label: "Profil" },
-    { id: "acces", label: "Accès soins" },
-    { id: "numerique", label: "Numérique" },
-    { id: "teleconsultation", label: "Téléconsultation" },
-    { id: "sang", label: "Don de sang" },
+    { id: "connaissances", label: "Connaissances SR" },
+    { id: "sources", label: "Sources d'info" },
+    { id: "freins", label: "Freins" },
+    { id: "attentes", label: "Attentes FAGARU" },
+    { id: "anonyme", label: "Module anonyme" },
     { id: "confiance", label: "Confiance" },
+    { id: "numerique", label: "Numérique" },
   ];
 
   return (
     <div style={{ maxWidth: 900, margin: "0 auto", padding: "32px 24px 80px" }}>
       {/* KPI row */}
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: 16, marginBottom: 32 }}>
-        <KPICard label="Réponses totales" value={stats.total} icon="📊" color="var(--primary)" />
-        <KPICard label="Confiance diagnostic" value={stats.teleconsultation?.Q22 ? `${stats.teleconsultation.Q22.avg?.toFixed(1)}/5` : "—"} icon="🩺" color="#6ee7f7" />
-        <KPICard label="Confiance données" value={stats.confiance?.Q39 ? `${stats.confiance.Q39.avg?.toFixed(1)}/5` : "—"} icon="🔒" color="#a78bfa" />
-        <KPICard label="Pilote Dakar" value={pct(stats.engagement?.Q44, "Oui", stats.total)} icon="🚀" color="var(--accent)" />
+        <KPICard label="Réponses totales" value={stats.total} color="var(--primary)" />
+        <KPICard label="Connaissance SR" value={stats.connaissances?.Q9 ? `${stats.connaissances.Q9.avg?.toFixed(1)}/5` : "—"} color="#6ee7f7" />
+        <KPICard label="Confiance plateforme" value={stats.confiance?.Q30 ? `${stats.confiance.Q30.avg?.toFixed(1)}/5` : "—"} color="#a78bfa" />
+        <KPICard label="Prêts à tester" value={pct(stats.engagement?.Q40, "Oui", stats.total)} color="var(--accent)" />
       </div>
 
       {/* Timeline */}
@@ -63,14 +68,18 @@ export default function Stats() {
       {/* Tab content */}
       {activeTab === "overview" && <OverviewTab stats={stats} />}
       {activeTab === "profil" && <ProfilTab data={stats.profil} />}
-      {activeTab === "acces" && <AccesTab data={stats.acces} total={stats.total} />}
-      {activeTab === "numerique" && <NumeriqueTab data={stats.numerique} total={stats.total} />}
-      {activeTab === "teleconsultation" && <TeleconsultTab data={stats.teleconsultation} total={stats.total} />}
-      {activeTab === "sang" && <SangTab data={stats.sang} total={stats.total} />}
+      {activeTab === "connaissances" && <ConnaissancesTab data={stats.connaissances} total={stats.total} />}
+      {activeTab === "sources" && <SourcesTab data={stats.sources} total={stats.total} />}
+      {activeTab === "freins" && <FreinsTab data={stats.freins} total={stats.total} />}
+      {activeTab === "attentes" && <AttentesTab data={stats.attentes} total={stats.total} />}
+      {activeTab === "anonyme" && <ModuleAnonymeTab data={stats.moduleAnonyme} total={stats.total} />}
       {activeTab === "confiance" && <ConfianceTab data={stats.confiance} total={stats.total} />}
+      {activeTab === "numerique" && <NumeriqueTab data={stats.numerique} total={stats.total} />}
     </div>
   );
 }
+
+// ─── Section 1: Profil ────────────────────────────────────────────────────────
 
 function OverviewTab({ stats }) {
   const total = stats.total;
@@ -79,7 +88,7 @@ function OverviewTab({ stats }) {
       <ChartCard title="Tranches d'âge" data={stats.profil?.Q1} total={total} color="var(--primary)" />
       <ChartCard title="Sexe" data={stats.profil?.Q2} total={total} color="#a78bfa" />
       <ChartCard title="Zone de résidence" data={stats.profil?.Q3} total={total} color="#6ee7f7" />
-      <ChartCard title="Téléconsultation" data={stats.teleconsultation?.Q18} total={total} color="var(--accent)" />
+      <ChartCard title="Utiliserait FAGARU" data={stats.attentes?.Q20} total={total} color="var(--accent)" />
     </div>
   );
 }
@@ -91,85 +100,115 @@ function ProfilTab({ data }) {
       <ChartCard title="Âge" data={data?.Q1} total={total_entries} color="var(--primary)" />
       <ChartCard title="Sexe" data={data?.Q2} total={total_entries} color="#a78bfa" />
       <ChartCard title="Zone" data={data?.Q3} total={total_entries} color="#6ee7f7" />
-      <ChartCard title="Profession" data={data?.Q4} total={total_entries} color="var(--accent)" />
-      <ChartCard title="Niveau d'études" data={data?.Q5} total={total_entries} color="#fcd34d" />
+      <ChartCard title="Situation actuelle" data={data?.Q4} total={total_entries} color="var(--accent)" />
+      <ChartCard title="Avec qui vis-tu" data={data?.Q5} total={total_entries} color="#fcd34d" />
       <ChartCard title="Langues parlées" data={data?.Q6} total={total_entries} color="#f9a8d4" />
     </div>
   );
 }
 
-function AccesTab({ data, total }) {
-  return (
-    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20 }}>
-      <ChartCard title="Fréquence consultation" data={data?.Q7} total={total} color="var(--primary)" />
-      <ChartCard title="Distance structure santé" data={data?.Q8} total={total} color="#6ee7f7" />
-      <ChartCard title="Temps d'attente" data={data?.Q9} total={total} color="#fcd34d" />
-      <ChartCard title="Freins à la consultation" data={data?.Q10} total={total} color="var(--red)" />
-      <ChartCard title="Coût consultation" data={data?.Q11} total={total} color="var(--accent)" />
-      <ChartCard title="Assurance santé" data={data?.Q12} total={total} color="#a78bfa" />
-    </div>
-  );
-}
+// ─── Section 2: Connaissances SR ──────────────────────────────────────────────
 
-function NumeriqueTab({ data, total }) {
+function ConnaissancesTab({ data, total }) {
   return (
     <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20 }}>
-      <ChartCard title="Type de téléphone" data={data?.Q13} total={total} color="var(--primary)" />
-      <ChartCard title="Accès internet" data={data?.Q14} total={total} color="#6ee7f7" />
-      <ChartCard title="Services paiement mobile" data={data?.Q15} total={total} color="#fcd34d" />
-      <ChartCard title="Fréquence apps mobiles" data={data?.Q16} total={total} color="var(--accent)" />
-      <ChartCard title="App santé déjà utilisée" data={data?.Q17} total={total} color="#a78bfa" />
-    </div>
-  );
-}
-
-function TeleconsultTab({ data, total }) {
-  return (
-    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20 }}>
-      <ChartCard title="Prêt(e) pour téléconsultation" data={data?.Q18} total={total} color="var(--primary)" />
-      <ChartCard title="Motifs acceptés" data={data?.Q19} total={total} color="#6ee7f7" />
-      <ChartCard title="Mode préféré" data={data?.Q20} total={total} color="#fcd34d" />
-      <ChartCard title="Prix acceptable" data={data?.Q21} total={total} color="var(--accent)" />
-      {data?.Q22 && (
+      <ChartCard title="Éducation SR reçue" data={data?.Q7} total={total} color="var(--primary)" />
+      <ChartCard title="Âge première info" data={data?.Q8} total={total} color="#6ee7f7" />
+      {data?.Q9 && (
         <div style={cardStyle}>
-          <h3 style={cardTitle}>Confiance diagnostic à distance</h3>
+          <h3 style={cardTitle}>Niveau de connaissance SR</h3>
           <div style={{ textAlign: "center", padding: "20px 0" }}>
-            <div style={{ fontSize: 48, fontWeight: 700, color: "var(--primary)" }}>{data.Q22.avg?.toFixed(2)}<span style={{ fontSize: 24 }}>/5</span></div>
-            <div style={{ fontSize: 13, color: "var(--text-muted)", marginTop: 4 }}>{data.Q22.count} réponses</div>
+            <div style={{ fontSize: 48, fontWeight: 700, color: "var(--primary)" }}>{data.Q9.avg?.toFixed(2)}<span style={{ fontSize: 24 }}>/5</span></div>
+            <div style={{ fontSize: 13, color: "var(--text-muted)", marginTop: 4 }}>{data.Q9.count} réponses</div>
           </div>
         </div>
       )}
+      <ChartCard title="Sujets souhaités" data={data?.Q10} total={total} color="#fcd34d" />
     </div>
   );
 }
 
-function SangTab({ data, total }) {
+// ─── Section 3: Sources d'info ────────────────────────────────────────────────
+
+function SourcesTab({ data, total }) {
   return (
     <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20 }}>
-      <ChartCard title="Groupe sanguin connu" data={data?.Q29} total={total} color="var(--red)" />
-      <ChartCard title="Déjà donné son sang" data={data?.Q30} total={total} color="var(--accent)" />
-      <ChartCard title="Raisons de non-don" data={data?.Q31} total={total} color="#fcd34d" />
-      <ChartCard title="Urgence sang vécue" data={data?.Q32} total={total} color="#a78bfa" />
-      <ChartCard title="Notifications urgences" data={data?.Q33} total={total} color="var(--primary)" />
-      <ChartCard title="Avis anonymisation" data={data?.Q34} total={total} color="#6ee7f7" />
+      <ChartCard title="Sources consultées en premier" data={data?.Q11} total={total} color="var(--primary)" />
+      <ChartCard title="Contenus internet consultés" data={data?.Q14} total={total} color="#6ee7f7" />
+      <ChartCard title="Info fausse reçue" data={data?.Q15} total={total} color="var(--accent)" />
     </div>
   );
 }
+
+// ─── Section 4: Freins ────────────────────────────────────────────────────────
+
+function FreinsTab({ data, total }) {
+  return (
+    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20 }}>
+      <ChartCard title="Facilité à en parler" data={data?.Q16} total={total} color="var(--primary)" />
+      <ChartCard title="Freins principaux" data={data?.Q17} total={total} color="var(--red)" />
+      <ChartCard title="Sujets jamais abordés" data={data?.Q18} total={total} color="#fcd34d" />
+      <ChartCard title="Endroit adapté connu" data={data?.Q19} total={total} color="#a78bfa" />
+    </div>
+  );
+}
+
+// ─── Section 5: Attentes FAGARU ───────────────────────────────────────────────
+
+function AttentesTab({ data, total }) {
+  return (
+    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20 }}>
+      <ChartCard title="Utiliserait FAGARU" data={data?.Q20} total={total} color="var(--primary)" />
+      <ChartCard title="Format d'info préféré" data={data?.Q21} total={total} color="#6ee7f7" />
+      <ChartCard title="Langue préférée" data={data?.Q22} total={total} color="#a78bfa" />
+      <ChartCard title="Canal d'accès préféré" data={data?.Q23} total={total} color="var(--accent)" />
+      <ChartCard title="Fréquence d'utilisation" data={data?.Q24} total={total} color="#fcd34d" />
+    </div>
+  );
+}
+
+// ─── Section 6: Module anonyme ────────────────────────────────────────────────
+
+function ModuleAnonymeTab({ data, total }) {
+  return (
+    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20 }}>
+      <ChartCard title="Utilité du module" data={data?.Q25} total={total} color="var(--primary)" />
+      <ChartCard title="Confiance envers le répondant" data={data?.Q26} total={total} color="#6ee7f7" />
+      <ChartCard title="Délai de réponse souhaité" data={data?.Q27} total={total} color="#fcd34d" />
+      <ChartCard title="Conditions acceptées" data={data?.Q28} total={total} color="var(--accent)" />
+    </div>
+  );
+}
+
+// ─── Section 7: Confiance ─────────────────────────────────────────────────────
 
 function ConfianceTab({ data, total }) {
   return (
     <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20 }}>
-      <ChartCard title="Préoccupations" data={data?.Q38} total={total} color="var(--red)" />
-      {data?.Q39 && (
+      <ChartCard title="Inquiétudes" data={data?.Q29} total={total} color="var(--red)" />
+      {data?.Q30 && (
         <div style={cardStyle}>
-          <h3 style={cardTitle}>Confiance sécurité des données</h3>
+          <h3 style={cardTitle}>Confiance plateforme officielle</h3>
           <div style={{ textAlign: "center", padding: "20px 0" }}>
-            <div style={{ fontSize: 48, fontWeight: 700, color: "#a78bfa" }}>{data.Q39.avg?.toFixed(2)}<span style={{ fontSize: 24 }}>/5</span></div>
-            <div style={{ fontSize: 13, color: "var(--text-muted)", marginTop: 4 }}>{data.Q39.count} réponses</div>
+            <div style={{ fontSize: 48, fontWeight: 700, color: "#a78bfa" }}>{data.Q30.avg?.toFixed(2)}<span style={{ fontSize: 24 }}>/5</span></div>
+            <div style={{ fontSize: 13, color: "var(--text-muted)", marginTop: 4 }}>{data.Q30.count} réponses</div>
           </div>
         </div>
       )}
-      <ChartCard title="Garant sécurité données" data={data?.Q40} total={total} color="var(--primary)" />
+      <ChartCard title="Acteurs de promotion souhaités" data={data?.Q31} total={total} color="var(--primary)" />
+    </div>
+  );
+}
+
+// ─── Section 8: Numérique ─────────────────────────────────────────────────────
+
+function NumeriqueTab({ data, total }) {
+  return (
+    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20 }}>
+      <ChartCard title="Type de téléphone" data={data?.Q32} total={total} color="var(--primary)" />
+      <ChartCard title="Mode de connexion" data={data?.Q33} total={total} color="#6ee7f7" />
+      <ChartCard title="Temps sur écran par jour" data={data?.Q34} total={total} color="#fcd34d" />
+      <ChartCard title="Réseaux sociaux" data={data?.Q35} total={total} color="var(--accent)" />
     </div>
   );
 }
@@ -209,10 +248,9 @@ function ChartCard({ title, data, total, color }) {
   );
 }
 
-function KPICard({ label, value, icon, color }) {
+function KPICard({ label, value, color }) {
   return (
     <div style={{ ...cardStyle, textAlign: "center", padding: "20px" }}>
-      <div style={{ fontSize: 28, marginBottom: 8 }}>{icon}</div>
       <div style={{ fontSize: 28, fontWeight: 700, color }}>{value}</div>
       <div style={{ fontSize: 12, color: "var(--text-muted)", marginTop: 4 }}>{label}</div>
     </div>
@@ -255,7 +293,7 @@ function LoadState() {
 function ErrorState({ msg }) {
   return (
     <div style={{ display: "flex", justifyContent: "center", alignItems: "center", minHeight: "60vh" }}>
-      <p style={{ color: "var(--red)" }}>❌ {msg}</p>
+      <p style={{ color: "var(--red)" }}>{msg}</p>
     </div>
   );
 }
@@ -263,7 +301,6 @@ function ErrorState({ msg }) {
 function EmptyState() {
   return (
     <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", minHeight: "60vh", gap: 12 }}>
-      <div style={{ fontSize: 48 }}>📭</div>
       <p style={{ color: "var(--text-muted)", fontSize: 16 }}>Aucune réponse encore soumise.</p>
       <p style={{ color: "var(--text-muted)", fontSize: 13 }}>Les statistiques apparaîtront ici dès la première réponse.</p>
     </div>

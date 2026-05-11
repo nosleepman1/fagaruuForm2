@@ -1,14 +1,22 @@
 const validateSubmitResponse = (req, res, next) => {
+  // Required fields based on questions.json (required: true)
   const requiredFields = [
+    // Section 1 - Toi en quelques mots
     'Q1', 'Q2', 'Q3', 'Q4', 'Q5', 'Q6',
-    'Q7', 'Q8', 'Q9', 'Q12',
-    'Q13', 'Q14', 'Q16', 'Q17',
-    'Q18', 'Q22',
-    'Q23', 'Q24', 'Q25',
-    'Q26',
-    'Q35',
-    'Q39',
-    'Q44'
+    // Section 2 - Ce que tu sais déjà
+    'Q7', 'Q8', 'Q9',
+    // Section 4 - Ce qui est difficile à aborder
+    'Q16',
+    // Section 5 - Ce que tu attendrais de FAGARU
+    'Q20', 'Q22', 'Q23', 'Q24',
+    // Section 6 - Module anonyme
+    'Q25',
+    // Section 7 - Confiance et confidentialité
+    'Q30',
+    // Section 8 - Ton accès au numérique
+    'Q32', 'Q33', 'Q34',
+    // Section 10 - Et après ?
+    'Q40'
   ];
 
   const missingFields = requiredFields.filter((key) => {
