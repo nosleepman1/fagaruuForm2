@@ -1,41 +1,54 @@
 import { useState } from "react";
-import { useResponses } from "../hooks/useData.js";
-import { LoadState, ErrorState, EmptyState } from "./ui.jsx";
+import { useResponses } from "./useData.jsx";
+import { LoadState, ErrorState, EmptyState } from "./Ui.jsx";
 
 // ─── Label maps for clean display ────────────────────────────────────────────
 const SECTION_LABELS = {
+  // Section 1 - Toi en quelques mots
   Q1: "Âge", Q2: "Sexe", Q3: "Zone", Q3_ville: "Ville/commune",
-  Q4: "Profession", Q4_autre: "Profession (autre)", Q5: "Niveau d'études",
-  Q6: "Langues", Q6_autre: "Langue (autre)",
-  Q7: "Fréq. consultation", Q8: "Distance soin", Q9: "Temps d'attente",
-  Q10: "Freins consultation", Q10_autre: "Frein (autre)", Q11: "Coût consultation", Q12: "Assurance",
-  Q13: "Type téléphone", Q14: "Accès internet", Q15: "Paiement mobile",
-  Q16: "Fréq. apps", Q17: "App santé", Q17_detail: "App santé (détail)",
-  Q18: "Téléconsultation", Q19: "Motifs téléconsult.", Q20: "Mode préféré",
-  Q21: "Prix téléconsult.", Q22: "Confiance diagnostic",
-  Q23: "Conservation docs", Q23_autre: "Docs (autre)", Q24: "Dossier numérique", Q25: "Partage dossier",
-  Q26: "Paiement mobile soins", Q27: "Mode paiement", Q28: "Paiement pharmacie",
-  Q29: "Groupe sanguin", Q29_groupe: "Groupe (valeur)", Q30: "Don de sang",
-  Q31: "Raisons non-don", Q31_autre: "Raison (autre)", Q32: "Urgence sang", Q32_detail: "Urgence (détail)",
-  Q33: "Notifications sang", Q34: "Avis anonymisation",
-  Q35: "Langue app", Q35_autre: "Autre langue", Q36: "Assistant auto", Q37: "Usages assistant",
-  Q38: "Préoccupations", Q39: "Confiance données", Q40: "Garant données",
-  Q41: "Fonctionnalité utile", Q42: "Faire connaître FAGARUU", Q43: "Suggestions",
-  Q44: "Phase pilote", Q44_prenom: "Prénom", Q44_telephone: "Téléphone"
+  Q4: "Situation actuelle", Q5: "Avec qui vis-tu", Q5_autre: "Autre (logement)",
+  Q6: "Langues parlées",
+  // Section 2 - Connaissances SR
+  Q7: "Éducation SR reçue", Q8: "Âge première info SR", Q9: "Niveau connaissance SR",
+  Q10: "Sujets souhaités", Q10_autre: "Autre sujet",
+  // Section 3 - Sources
+  Q11: "Sources consultées", Q12: "Source la plus fiable", Q13: "Source la plus utilisée",
+  Q14: "Contenus internet", Q15: "Info fausse reçue", Q15_detail: "Sujet info fausse",
+  // Section 4 - Freins
+  Q16: "Facilité à parler de SR", Q17: "Freins à poser des questions",
+  Q18: "Sujets jamais abordés", Q18_detail: "Détail sujets",
+  Q19: "Endroit adapté connu", Q19_detail: "Lequel",
+  // Section 5 - Attentes FAGARU
+  Q20: "Utiliserait une app", Q21: "Format info préféré",
+  Q22: "Langue préférée", Q22_autre: "Autre langue",
+  Q23: "Canal d'accès", Q24: "Fréquence d'utilisation",
+  // Section 6 - Module anonyme
+  Q25: "Utilité module anonyme", Q26: "Confiance répondant",
+  Q27: "Délai réponse souhaité", Q28: "Conditions acceptées",
+  // Section 7 - Confiance
+  Q29: "Inquiétudes plateforme", Q30: "Confiance officielle",
+  Q31: "Acteurs promotion",
+  // Section 8 - Numérique
+  Q32: "Type téléphone", Q33: "Mode connexion", Q34: "Temps écran",
+  Q35: "Réseaux sociaux", Q35_autre: "Autre réseau",
+  // Section 9 - Idées
+  Q36: "Question à un médecin", Q37: "Ce qui ferait adopter FAGARU",
+  Q38: "Ce qui freinerait l'adoption", Q39: "Message / suggestion",
+  // Section 10 - Et après
+  Q40: "Participer aux tests", Q40_prenom: "Prénom", Q40_contact: "Contact"
 };
 
 const SECTIONS = [
-  { label: "Profil", keys: ["Q1","Q2","Q3","Q3_ville","Q4","Q4_autre","Q5","Q6","Q6_autre"] },
-  { label: "Accès soins", keys: ["Q7","Q8","Q9","Q10","Q10_autre","Q11","Q12"] },
-  { label: "Numérique", keys: ["Q13","Q14","Q15","Q16","Q17","Q17_detail"] },
-  { label: "Téléconsult.", keys: ["Q18","Q19","Q20","Q21","Q22"] },
-  { label: "Dossier", keys: ["Q23","Q23_autre","Q24","Q25"] },
-  { label: "Paiement", keys: ["Q26","Q27","Q28"] },
-  { label: "Don sang", keys: ["Q29","Q29_groupe","Q30","Q31","Q31_autre","Q32","Q32_detail","Q33","Q34"] },
-  { label: "Assistant", keys: ["Q35","Q35_autre","Q36","Q37"] },
-  { label: "Confiance", keys: ["Q38","Q39","Q40"] },
-  { label: "Suggestions", keys: ["Q41","Q42","Q43"] },
-  { label: "Engagement", keys: ["Q44","Q44_prenom"] },
+  { label: "Profil", keys: ["Q1","Q2","Q3","Q3_ville","Q4","Q5","Q5_autre","Q6"] },
+  { label: "Connaissances", keys: ["Q7","Q8","Q9","Q10","Q10_autre"] },
+  { label: "Sources", keys: ["Q11","Q12","Q13","Q14","Q15","Q15_detail"] },
+  { label: "Freins", keys: ["Q16","Q17","Q18","Q18_detail","Q19","Q19_detail"] },
+  { label: "Attentes", keys: ["Q20","Q21","Q22","Q22_autre","Q23","Q24"] },
+  { label: "Module anonyme", keys: ["Q25","Q26","Q27","Q28"] },
+  { label: "Confiance", keys: ["Q29","Q30","Q31"] },
+  { label: "Numérique", keys: ["Q32","Q33","Q34","Q35","Q35_autre"] },
+  { label: "Idées", keys: ["Q36","Q37","Q38","Q39"] },
+  { label: "Engagement", keys: ["Q40","Q40_prenom","Q40_contact"] },
 ];
 
 function formatValue(v) {
@@ -86,7 +99,7 @@ function ResponseDrawer({ response, onClose }) {
         }}>
           <div>
             <div style={{ fontSize: 15, fontWeight: 700, color: "var(--text)" }}>
-              Réponse — {response.Q44_prenom || "Anonyme"}
+              Réponse — {response.Q40_prenom || "Anonyme"}
             </div>
             <div style={{ fontSize: 11, color: "var(--text-muted)", marginTop: 2, fontFamily: "'DM Mono', monospace" }}>
               {submittedAt.toLocaleDateString("fr-FR", { day:"2-digit", month:"long", year:"numeric" })}
@@ -158,19 +171,19 @@ function TableRow({ response, onClick, index }) {
       }}
     >
       <td style={td}><span style={{ fontFamily: "'DM Mono', monospace", fontSize: 11, color: "var(--text-muted)" }}>#{String(index).padStart(3, "0")}</span></td>
-      <td style={td}><span style={{ fontSize: 13 }}>{response.Q44_prenom || <span style={{ color: "var(--text-muted)", fontStyle: "italic" }}>Anonyme</span>}</span></td>
+      <td style={td}><span style={{ fontSize: 13 }}>{response.Q40_prenom || <span style={{ color: "var(--text-muted)", fontStyle: "italic" }}>Anonyme</span>}</span></td>
       <td style={td}><Badge text={response.Q1} /></td>
       <td style={td}><Badge text={response.Q2} color="#a78bfa" /></td>
       <td style={td}><span style={{ fontSize: 12, color: "var(--text-dim)" }}>{response.Q3 || "—"}</span></td>
       <td style={td}>
         <span style={{
           fontSize: 11, fontWeight: 600, padding: "2px 8px", borderRadius: 4,
-          background: response.Q18?.includes("sans hésitation") ? "rgba(0,200,150,0.15)" :
-                      response.Q18?.includes("physique") ? "rgba(255,77,109,0.12)" : "var(--surface2)",
-          color: response.Q18?.includes("sans hésitation") ? "var(--primary)" :
-                 response.Q18?.includes("physique") ? "var(--red)" : "var(--text-muted)"
+          background: response.Q20?.includes("Oui") ? "rgba(0,200,150,0.15)" :
+                      response.Q20?.includes("Non") ? "rgba(255,77,109,0.12)" : "var(--surface2)",
+          color: response.Q20?.includes("Oui") ? "var(--primary)" :
+                 response.Q20?.includes("Non") ? "var(--red)" : "var(--text-muted)"
         }}>
-          {response.Q18 ? response.Q18.substring(0, 24) + (response.Q18.length > 24 ? "…" : "") : "—"}
+          {response.Q20 ? response.Q20.substring(0, 28) + (response.Q20.length > 28 ? "…" : "") : "—"}
         </span>
       </td>
       <td style={td}><span style={{ fontSize: 11, color: "var(--text-muted)", fontFamily: "'DM Mono', monospace" }}>{date.toLocaleDateString("fr-FR")}</span></td>
@@ -182,9 +195,9 @@ function TableRow({ response, onClick, index }) {
       <td style={td}>
         <span style={{
           fontSize: 11, fontWeight: 600, padding: "2px 8px", borderRadius: 4,
-          background: response.Q44 === "Oui" ? "rgba(0,200,150,0.12)" : "var(--surface2)",
-          color: response.Q44 === "Oui" ? "var(--primary)" : "var(--text-muted)"
-        }}>{response.Q44 || "—"}</span>
+          background: response.Q40 === "Oui" ? "rgba(0,200,150,0.12)" : "var(--surface2)",
+          color: response.Q40 === "Oui" ? "var(--primary)" : "var(--text-muted)"
+        }}>{response.Q40 || "—"}</span>
       </td>
     </tr>
   );
@@ -255,7 +268,7 @@ export default function ResponsesTable() {
             <table style={{ width: "100%", borderCollapse: "collapse", tableLayout: "auto" }}>
               <thead>
                 <tr>
-                  {["#","Prénom","Âge","Sexe","Zone","Téléconsult.","Date","Durée","Pilote"].map(h => (
+                  {["#","Prénom","Âge","Sexe","Zone","App FAGARU","Date","Durée","Test"].map(h => (
                     <th key={h} style={th}>{h}</th>
                   ))}
                 </tr>
