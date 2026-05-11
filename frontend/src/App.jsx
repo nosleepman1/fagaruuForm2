@@ -1,25 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import Form from "./Form";
 import Stats from "./Stats";
 
 export default function App() {
-  const [view, setView] = useState("form"); // "form" | "stats" | "thanks"
-  const [statsAuth, setStatsAuth] = useState(false);
-
-  // Hash-based routing: only /stats is accessible via URL
-  useEffect(() => {
-    const checkHash = () => {
-      if (window.location.hash === "#/stats") {
-        setView("stats");
-      } else {
-        if (view === "stats") setView("form");
-      }
-    };
-    checkHash();
-    window.addEventListener("hashchange", checkHash);
-    return () => window.removeEventListener("hashchange", checkHash);
-  }, []);
-
   return (
     <div style={{ minHeight: "100vh", background: "var(--bg)", fontFamily: "'Sora', sans-serif" }}>
       <style>{`
@@ -56,7 +40,7 @@ export default function App() {
         position: "sticky", top: 0, zIndex: 100,
         padding: "0 24px"
       }}>
-        <div style={{ maxWidth: 900, margin: "0 auto", height: 64, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+        <div style={{ maxWidth: 900, margin: "0 auto", height: 64, display: "flex", alignItems: "center" }}>
           <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
             <div style={{
               width: 36, height: 36, borderRadius: 10,
@@ -72,25 +56,49 @@ export default function App() {
         </div>
       </header>
 
-      {view === "form" && <Form onDone={() => setView("thanks")} />}
-      {view === "stats" && (
-        statsAuth
-          ? <Stats />
-          : <AccessGate onAuth={() => setStatsAuth(true)} />
-      )}
-      {view === "thanks" && <Thanks onBack={() => setView("form")} />}
+      <Routes>
+        <Route path="/" element={<FormPage />} />
+        <Route path="/thanks" element={<ThanksPage />} />
+        <Route path="/stats" element={<StatsGate />} />
+      </Routes>
     </div>
   );
 }
 
-function AccessGate({ onAuth }) {
+function FormPage() {
+  const navigate = useNavigate();
+  return <Form onDone={() => navigate("/thanks")} />;
+}
+
+function ThanksPage() {
+  const navigate = useNavigate();
+  return (
+    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", minHeight: "calc(100vh - 64px)", padding: 24, textAlign: "center" }}>
+      <h1 style={{ fontSize: 32, fontWeight: 700, marginBottom: 12, color: "var(--primary)" }}>Merci pour votre participation !</h1>
+      <p style={{ color: "var(--text-dim)", maxWidth: 480, lineHeight: 1.6, marginBottom: 32 }}>
+        Vos réponses contribuent directement à construire une solution de santé adaptée aux besoins réels des jeunes du Sénégal.
+      </p>
+      <button onClick={() => navigate("/")} style={{
+        padding: "12px 24px", borderRadius: 10, border: "none", cursor: "pointer",
+        fontFamily: "inherit", fontSize: 14, fontWeight: 600, transition: "all 0.2s",
+        background: "var(--primary)", color: "#000"
+      }}>Soumettre une autre réponse</button>
+      <p style={{ marginTop: 24, fontSize: 13, color: "var(--text-muted)" }}>FAGARUU · Groupe AMBO TECH · Keur Massar, Dakar</p>
+    </div>
+  );
+}
+
+function StatsGate() {
+  const [auth, setAuth] = useState(false);
   const [key, setKey] = useState("");
   const [error, setError] = useState(false);
+
+  if (auth) return <Stats />;
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (key.trim().toUpperCase() === "AMBOTECH") {
-      onAuth();
+      setAuth(true);
     } else {
       setError(true);
       setTimeout(() => setError(false), 2000);
@@ -135,28 +143,4 @@ function AccessGate({ onAuth }) {
       </form>
     </div>
   );
-}
-
-function Thanks({ onBack }) {
-  return (
-    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", minHeight: "calc(100vh - 64px)", padding: 24, textAlign: "center" }}>
-      <h1 style={{ fontSize: 32, fontWeight: 700, marginBottom: 12, color: "var(--primary)" }}>Merci pour votre participation !</h1>
-      <p style={{ color: "var(--text-dim)", maxWidth: 480, lineHeight: 1.6, marginBottom: 32 }}>
-        Vos réponses contribuent directement à construire une solution de santé adaptée aux besoins réels des jeunes du Sénégal.
-      </p>
-      <div style={{ display: "flex", gap: 12 }}>
-        <button onClick={onBack} style={btnStyle("primary")}>Soumettre une autre réponse</button>
-      </div>
-      <p style={{ marginTop: 24, fontSize: 13, color: "var(--text-muted)" }}>FAGARUU · Groupe AMBO TECH · Keur Massar, Dakar</p>
-    </div>
-  );
-}
-
-function btnStyle(variant) {
-  return {
-    padding: "12px 24px", borderRadius: 10, border: "none", cursor: "pointer",
-    fontFamily: "inherit", fontSize: 14, fontWeight: 600, transition: "all 0.2s",
-    background: variant === "primary" ? "var(--primary)" : "var(--surface2)",
-    color: variant === "primary" ? "#000" : "var(--text)",
-  };
 }
