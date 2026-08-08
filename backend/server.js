@@ -16,6 +16,7 @@ const allowedOrigins = [
   'http://localhost:3000',
   'http://localhost:5173',
   'https://fagaruu2.vercel.app',
+  'https://form.ambo-tech.com',
   process.env.FRONTEND_URL,
 ].filter(Boolean);
 
